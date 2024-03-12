@@ -122,9 +122,10 @@ def prepare_fmri_features(train_features, test_features, word_train_indicator, T
   
 
 def run_class_time_CV_fmri_crossval_ridge(data, predict_feat_dict,
-                                          regress_feat_names_list = [],method = 'kernel_ridge', 
+                                          regress_feat_names_list = None,method = 'kernel_ridge', 
                                           lambdas = np.array([0.1,1,10,100,1000]),
                                           detrend = False, n_folds = 4, skip=5):
+    regress_feat_names_list = [] if regress_feat_names_list is None else regress_feat_names_list
     
     nlp_feat_type = predict_feat_dict['nlp_feat_type']
     feat_dir = predict_feat_dict['nlp_feat_dir']
@@ -189,7 +190,9 @@ def run_class_time_CV_fmri_crossval_ridge(data, predict_feat_dict,
 
     return corrs, acc, acc_std, np.vstack(all_preds), np.vstack(all_test_data)
 
-def binary_classify_neighborhoods(Ypred, Y, n_class=20, nSample = 1000,pair_samples = [],neighborhoods=[]):
+def binary_classify_neighborhoods(Ypred, Y, n_class=20, nSample = 1000,pair_samples = None,neighborhoods=None):
+    pair_samples = [] if pair_samples is None else pair_samples
+    neighborhoods = [] if neighborhoods is None else neighborhoods
     # n_class = how many words to classify at once
     # nSample = how many words to classify
     # Ypred, Y: (297, 27905)
