@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 import pandas as pd
 import seaborn as sns
+import fickling
 
 np.random.seed(42)  # Set random seed
 
@@ -17,7 +18,7 @@ def compute_pearson_from_preds_numpy(pred_path, expt_setting):
     test_t_per_feat = loaded.item()['test_t']
     
     TR_one_hot_pkl_path = f'./data/TR_one_hot_for_features/{expt_setting}.pkl'
-    TR_one_hot = pickle.load(open(TR_one_hot_pkl_path, 'rb'))
+    TR_one_hot = fickling.load(open(TR_one_hot_pkl_path, 'rb'))
     TR_indices = np.where(TR_one_hot==1)[0]                                 # List of TR indices: [10, 13,...]
     TR_indices = np.random.choice(TR_indices, size=162, replace=False)      # Randomly select 162 TR indices, with set seed
     TR_indices = np.sort(TR_indices)
@@ -31,7 +32,7 @@ def compute_pearson_from_preds_numpy(pred_path, expt_setting):
 
 def get_pearson_from_saved_pkl(pkl_path):
     # print('get_pearson_from_saved_pkl:', pkl_path)
-    loaded = pickle.load(open(pkl_path, 'rb'))
+    loaded = fickling.load(open(pkl_path, 'rb'))
     return loaded['mean_pearson_across_subjects'], loaded['pearson_dict']
 
 def get_base_model_type(nlp_model):

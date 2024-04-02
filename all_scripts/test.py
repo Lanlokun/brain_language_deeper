@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import os
 import pickle
+import fickling
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
@@ -187,7 +188,7 @@ def get_number_of_tokens_per_word_HP_data():
 
 def explore_number_of_tokens_per_word_HP_data():
     pkl_path = os.path.join('0-logs/', 'num_tokens_for_each_model.pkl')
-    output_dict_nlp_model_to_num_tokens_list = pickle.load(open(pkl_path, 'rb'))
+    output_dict_nlp_model_to_num_tokens_list = fickling.load(open(pkl_path, 'rb'))
     
     seq_len_list = [20, 100, 200, 500, 600, ]
     nlp_to_hf_name_dict = get_nlp_to_hf_name_dict()
@@ -296,7 +297,7 @@ def test_word_to_TR():
                 word_train_indicator[i] = True
 
 def extract_rouge_results(pkl_path):
-    raw_dict = pickle.load(open(pkl_path, 'rb'))
+    raw_dict = fickling.load(open(pkl_path, 'rb'))
 
     rouge1_mid = raw_dict['rouge1'][1]          # 1 for mid from (low, mid, high)
     rouge2_mid = raw_dict['rouge2'][1]

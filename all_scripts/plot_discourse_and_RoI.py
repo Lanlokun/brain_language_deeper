@@ -3,6 +3,7 @@ import numpy as np
 import pickle
 import pandas as pd
 import seaborn as sns
+import fickling
 
 np.random.seed(42)  # Set random seed
 
@@ -33,7 +34,7 @@ def extract_all_voxels_pearson(pred_path, discourse_feature):
     test_t_per_feat = loaded.item()['test_t']
     
     TR_one_hot_pkl_path = f'./data/TR_one_hot_for_features/{discourse_feature}.pkl'
-    TR_one_hot = pickle.load(open(TR_one_hot_pkl_path, 'rb'))
+    TR_one_hot = fickling.load(open(TR_one_hot_pkl_path, 'rb'))
     TR_indices = np.where(TR_one_hot==1)[0]                                 # List of TR indices: [10, 13,...]
     TR_indices = np.random.choice(TR_indices, size=162, replace=False)      # Randomly select 162 TR indices, with set seed
     TR_indices = np.sort(TR_indices)
@@ -80,7 +81,7 @@ for nlp_model in nlp_model_list:
                 # If Pearson has been computed for ALL discourse features and ALL RoI labels, just load it
                 pearson_saved_path = f'8-RoI-and-pearson-saved/{nlp_model}/{nlp_model}_layer_{layer}_len_{seq_len}_subject_{subject}.pkl'
                 if os.path.isfile(pearson_saved_path):
-                    pearson_discourse_roi_dict = pickle.load(open(pearson_saved_path, 'rb'))
+                    pearson_discourse_roi_dict = fickling.load(open(pearson_saved_path, 'rb'))
                 
                 # Otherwise, compute the whole dictionary, then save it to a pkl file for future loading
                 else:

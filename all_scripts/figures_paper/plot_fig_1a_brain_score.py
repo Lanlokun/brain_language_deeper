@@ -1,10 +1,10 @@
 import os
-import pickle
 import pandas as pd
 import seaborn as sns
+import fickling
 
 def extract_brain_score(pkl_path):
-    loaded = pickle.load(open(pkl_path, 'rb'))          # (4, ~27905)
+    loaded = fickling.load(open(pkl_path, 'rb'))          # (4, ~27905)
     mean_subj_acc_across_folds = loaded.mean(0)         # (~27905,)
     mean_overall = mean_subj_acc_across_folds.mean(0)   # scalar
 

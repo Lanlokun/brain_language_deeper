@@ -4,6 +4,7 @@ import pickle
 import numpy as np
 import pandas as pd
 from scipy.stats import ttest_1samp
+import fickling
 
 # === Identify brain voxels where booksum is significantly greater than 0 ===
 # Do this for Characters & Full discourse features
@@ -21,7 +22,7 @@ def extract_all_voxels_pearson(pred_path, discourse_feature):
     test_t_per_feat = loaded.item()['test_t']
     
     TR_one_hot_pkl_path = f'./data/TR_one_hot_for_features/{discourse_feature}.pkl'
-    TR_one_hot = pickle.load(open(TR_one_hot_pkl_path, 'rb'))
+    TR_one_hot = fickling.load(open(TR_one_hot_pkl_path, 'rb'))
     TR_indices = np.where(TR_one_hot==1)[0]                                 # List of TR indices: [10, 13,...]
     TR_indices = np.random.choice(TR_indices, size=162, replace=False)      # Randomly select 162 TR indices, with set seed
     TR_indices = np.sort(TR_indices)

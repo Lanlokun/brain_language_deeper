@@ -1,8 +1,8 @@
 import os
 import numpy as np
-import pickle
 import pandas as pd
 import seaborn as sns
+import fickling
 
 # roi_label options can be found in loaded.item()[subject].keys()
 # Shapes for 1 subject: {'all': (5018,), 'PostTemp': (1234,), 'AntTemp': (783,), 'AngularG': (380,), 
@@ -11,7 +11,7 @@ roi_label_list = ['all', 'PostTemp', 'AntTemp', 'AngularG', 'IFG', 'MFG', 'IFGor
 HP_subj_roi_inds_loaded = np.load('./data/HP_subj_roi_inds.npy', allow_pickle=True)
 
 def extract_brain_scores_per_roi(brain_score_pkl_path, subject):
-    brain_score_loaded = pickle.load(open(brain_score_pkl_path, 'rb'))          # (4, ~27905)
+    brain_score_loaded = fickling.load(open(brain_score_pkl_path, 'rb'))          # (4, ~27905)
     brain_score_voxels_ALL = brain_score_loaded.mean(0)                         # (~27905,)
 
     brain_scores_per_roi = np.empty([len(roi_label_list)])                      # will be: [58.83, 59.21, ...]

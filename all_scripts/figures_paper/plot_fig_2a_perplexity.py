@@ -1,11 +1,11 @@
 import os
 import numpy as np
-import pickle as pk
 import pandas as pd
 import seaborn as sns
+import fickling
 
 def extract_results(pkl_path):
-    loaded = pk.load(open(pkl_path, 'rb'))
+    loaded = fickling.load(open(pkl_path, 'rb'))
     trained_weights = loaded['trained_weights']
     perplexity_list = loaded['perplexity_list']
     loss_list = [ np.log(x) for x in perplexity_list ]

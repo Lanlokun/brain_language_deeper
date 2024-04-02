@@ -1,17 +1,17 @@
 import os
-import pickle
 import pandas as pd
 import seaborn as sns
+import fickling
 
 def extract_brain_score(pkl_path):
-    loaded = pickle.load(open(pkl_path, 'rb'))          # (4, ~27905)
+    loaded = fickling.load(open(pkl_path, 'rb'))          # (4, ~27905)
     mean_subj_acc_across_folds = loaded.mean(0)
     mean_overall = mean_subj_acc_across_folds.mean(0)
 
     return mean_overall
 
 def extract_rouge_results(pkl_path):
-    raw_dict = pickle.load(open(pkl_path, 'rb'))
+    raw_dict = fickling.load(open(pkl_path, 'rb'))
 
     rouge1_mid = raw_dict['rouge1'][1]          # 1 for mid from (low, mid, high)
     rouge2_mid = raw_dict['rouge2'][1]
@@ -72,7 +72,7 @@ for nlp_model in nlp_model_list:
     # Add eval loss results
     print('=== Add eval_loss results ===')
     eval_loss_pkl_path = f'0-logs/rouge/eval_loss_for_{nlp_model}.pkl'
-    eval_loss_dict = pickle.load(open(eval_loss_pkl_path, 'rb'))
+    eval_loss_dict = fickling.load(open(eval_loss_pkl_path, 'rb'))
     for checkpoint_num, eval_loss in eval_loss_dict.items():
         df_row = {'nlp_model': nlp_model, 'checkpoint': checkpoint_num, 'score_type': 'eval_loss', 'score': eval_loss}
         df_row = pd.DataFrame([df_row])
